@@ -1,6 +1,17 @@
 # 配置
 
-## 编程式配置
+## TOC
+
+* [编程式配置](#programmatic)
+* [声明式配置](#declarative)
+* [通用设置](#common)
+* [集群模式](#cluster-mode)
+* [Elasticache 模式](#elasticache-mode)
+* [单实例模式](#single-instance-mode)
+* [Sentinel 模式](#sentinel-mode)
+* [主从模式](#master-slave-mode)
+
+## <a id="programmatic"></a> 编程式配置
 
 编程式配置通过 `Config` 对象实例来执行。如：
 
@@ -11,7 +22,7 @@ config.useClusterServers()
       .addNodeAddress("127.0.0.1:7181");
 ```
 
-## 声明式配置
+## <a id="declarative"></a> 声明式配置
 
 Redisson 配置可从 JSON 或 YAML 格式的文件中加载。
 
@@ -45,7 +56,7 @@ Config config = new Config();
 String yamlFormat = config.toYAML();
 ```
 
-## 通用设置
+## <a id="common"></a> 通用设置
 
 以下设置属于 `org.redisson.Config` 对象，且对所有模式都是通用的：
 
@@ -90,7 +101,7 @@ Redis 数据解编码器。用于读写 Redis 数据。支持多种实现：
 同样也用于激活 epoll 协议。
 `netty-transport-native-epoll` 类库需包含在 classpath 中。
 
-## 集群模式
+## <a id="cluster-mode"></a> 集群模式
 
 编程式配置示例：
 
@@ -326,7 +337,7 @@ useLinuxNativeEpoll: false
 eventLoopGroup: null
 ```
 
-## Elasticache 模式
+## <a id="elasticache-mode"></a> Elasticache 模式
 
 编程式配置示例：
 
@@ -560,7 +571,7 @@ useLinuxNativeEpoll: false
 eventLoopGroup: null
 ```
 
-## 单实例模式
+## <a id="single-instance-mode"></a> 单实例模式
 
 编程式配置示例：
 
@@ -764,7 +775,7 @@ useLinuxNativeEpoll: false
 eventLoopGroup: null
 ```
 
-## Sentinel 模式
+## <a id="sentinel-mode"></a> Sentinel 模式
 
 编程式配置示例：
 
@@ -778,7 +789,7 @@ config.useSentinelServers()
 RedissonClient redisson = Redisson.create(config);
 ```
 
-### Sentinel 配置
+### Sentinel 设置
 
 有关 Redis 服务器 sentinel 配置的文档在
 [这里](http://redis.io/topics/sentinel)。
@@ -788,7 +799,7 @@ RedissonClient redisson = Redisson.create(config);
 SentinelServersConfig clusterConfig = config.useSentinelServers();
 ```
 
-`SentinelServersConfig` 配置项如下：
+`SentinelServersConfig` 设置项如下：
 
 #### masterName
 
@@ -992,7 +1003,7 @@ useLinuxNativeEpoll: false
 eventLoopGroup: null
 ```
 
-## 主从模式
+## <a id="master-slave-mode"></a> 主从模式
 
 编程式配置示例：
 
@@ -1006,7 +1017,7 @@ config.useMasterSlaveServers()
 RedissonClient redisson = Redisson.create(config);
 ```
 
-### 主从配置
+### 主从设置
 
 有关 Redis 服务器主/从配置的文档在
 [这里](http://redis.io/topics/replication)。
