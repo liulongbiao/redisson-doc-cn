@@ -764,6 +764,251 @@ useLinuxNativeEpoll: false
 eventLoopGroup: null
 ```
 
+## Sentinel 模式
+
+编程式配置示例：
+
+```java
+Config config = new Config();
+config.useSentinelServers()
+    .setMasterName("mymaster")
+    .addSentinelAddress("127.0.0.1:26389", "127.0.0.1:26379")
+    .addSentinelAddress("127.0.0.1:26319");
+
+RedissonClient redisson = Redisson.create(config);
+```
+
+### Sentinel 配置
+
+有关 Redis 服务器 sentinel 配置的文档在
+[这里](http://redis.io/topics/sentinel)。
+集群连接模式可由以下代码激活：
+
+```java
+SentinelServersConfig clusterConfig = config.useSentinelServers();
+```
+
+`SentinelServersConfig` 配置项如下：
+
+#### masterName
+
+由 Redis Sentinel 服务器和主节点变更监控任务所使用的主服务器名称。
+
+#### addSentinelAddress
+
+添加 `host:port` 格式的 Redis Sentinel 节点地址。可一次性添加多个节点。
+
+#### loadBalancer
+
+默认值： `org.redisson.connection.balancer.RoundRobinLoadBalancer`
+
+其它实现有： `org.redisson.connection.balancer.WeightedRoundRobinBalancer`, 
+`redisson.connection.balancer.RandomLoadBalancer`
+
+多个 Redis 从服务器间的连接负载均衡器。
+
+#### slaveSubscriptionConnectionMinimumIdleSize
+
+默认值： `1`
+
+对 **每个** 从节点的 Redis '从'节点最小空闲订阅 (pub/sub) 连接量。
+
+#### slaveSubscriptionConnectionPoolSize
+
+默认值： `25`
+
+对 **每个** 从节点的 Redis '从'节点最大订阅 (pub/sub) 连接池大小。
+
+#### slaveConnectionMinimumIdleSize
+
+默认值： `1`
+
+对 **每个** 从节点的 Redis '从'节点最小空闲连接量。
+
+#### slaveConnectionPoolSize
+
+默认值： `100`
+
+对 **每个** 从节点的 Redis '从'节点最大连接池大小。
+
+#### masterConnectionMinimumIdleSize
+
+默认值： `5`
+
+对 **每个** 从节点的 Redis '主'节点最小空闲连接量。
+
+#### masterConnectionPoolSize
+
+默认值： `100`
+
+Redis '主'节点最大连接池大小。
+
+#### idleConnectionTimeout
+
+默认值： `10000`
+
+若池化连接在某段 `timeout` 时间内没有被使用且当前连接量超过最小空闲连接池时，
+它将会被关闭并从池中移除。其值的单位是毫秒。
+
+#### connectTimeout
+
+默认值： `1000`
+
+连接到任何 Redis 服务器的超时时间。
+
+#### timeout
+
+默认值： `1000`
+
+Redis 服务器响应的超时时间。从 Redis 命令被成功发送时开始计算。其值的单位是毫秒。
+
+#### retryAttempts
+
+默认值： `3`
+
+若 Redis 命令在超过 `retryAttempts` 次不能发送被 Redis 服务器，则将抛出一个错误。
+但若成功发送，则将开始 `timeout`。
+
+#### retryInterval
+
+默认值： `1000`
+
+发送 Redis 命令重试的时间间隔。其值的单位是毫秒。
+
+#### reconnectionTimeout
+
+默认值： `3000`
+
+Redis 服务器重连尝试的超时时间。在每次这种超时事件发生时， Redisson 会尝试连接到失联的 Redis 服务器。
+其值的单位是毫秒。
+
+#### failedAttempts
+
+默认值： `3`
+
+当任何 Redis 命令的连续的未成功执行尝试到达 `failedAttempts` 时，
+这个 Redis 服务器将被从一个内部的可用从节点列表中移除。
+
+#### database
+
+默认值： `0`
+
+针对 Redis 连接的数据库索引。
+
+#### password
+
+默认值： `null`
+
+Redis 服务器授权的密码。
+
+#### subscriptionsPerConnection
+
+默认值： `5`
+
+每个 Redis 连接上的订阅的限制
+
+#### clientName
+
+默认值： `null`
+
+客户端连接的名称。
+
+### Sentinel JSON 和 YAML 配置格式
+
+以下是 JSON 格式的 Sentinel 配置示例。
+所有属性名称都匹配 `SentinelServerConfig` 和 `Config` 对象的属性名称。
+
+```json
+{
+   "sentinelServersConfig":{
+      "idleConnectionTimeout":10000,
+      "pingTimeout":1000,
+      "connectTimeout":1000,
+      "timeout":1000,
+      "retryAttempts":3,
+      "retryInterval":1000,
+      "reconnectionTimeout":3000,
+      "failedAttempts":3,
+      "password":null,
+      "subscriptionsPerConnection":5,
+      "clientName":null,
+      "loadBalancer":{
+         "class":"org.redisson.connection.balancer.RoundRobinLoadBalancer"
+      },
+      "slaveSubscriptionConnectionMinimumIdleSize":1,
+      "slaveSubscriptionConnectionPoolSize":25,
+      "slaveConnectionMinimumIdleSize":5,
+      "slaveConnectionPoolSize":100,
+      "masterConnectionMinimumIdleSize":5,
+      "masterConnectionPoolSize":100,
+      "readMode":"SLAVE",
+      "sentinelAddresses":[
+         "//127.0.0.1:26379",
+         "//127.0.0.1:26389"
+      ],
+      "masterName":"mymaster",
+      "database":0
+   },
+   "threads":0,
+   "codec":null,
+   "useLinuxNativeEpoll":false,
+   "eventLoopGroup":null
+}
+```
+
+以下是 YAML 格式的 Sentinel 配置示例。
+所有属性名称都匹配 `SentinelServerConfig` 和 `Config` 对象的属性名称。
+
+```yaml
+---
+sentinelServersConfig:
+  idleConnectionTimeout: 10000
+  pingTimeout: 1000
+  connectTimeout: 1000
+  timeout: 1000
+  retryAttempts: 3
+  retryInterval: 1000
+  reconnectionTimeout: 3000
+  failedAttempts: 3
+  password: null
+  subscriptionsPerConnection: 5
+  clientName: null
+  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+  slaveSubscriptionConnectionMinimumIdleSize: 1
+  slaveSubscriptionConnectionPoolSize: 25
+  slaveConnectionMinimumIdleSize: 5
+  slaveConnectionPoolSize: 100
+  masterConnectionMinimumIdleSize: 5
+  masterConnectionPoolSize: 100
+  readMode: "SLAVE"
+  sentinelAddresses:
+  - "//127.0.0.1:26379"
+  - "//127.0.0.1:26389"
+  masterName: "mymaster"
+  database: 0
+threads: 0
+codec: !<org.redisson.codec.JsonJacksonCodec> {}
+useLinuxNativeEpoll: false
+eventLoopGroup: null
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
