@@ -215,7 +215,7 @@ RemoteService 对每个调用创建了两个队列。
 
 下图描绘了每个远程调用的消息流：
 
-![远程服务消息流](remote-service-message-flow.png)
+![远程服务消息流](./images/remote-service-message-flow.png)
 
 ### <a id="#692-remote-service-fire-and-forget-and-ack-response-modes"></a> Remote service. Fire-and-forget and ack-response modes
 
