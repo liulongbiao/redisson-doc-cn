@@ -3,7 +3,7 @@
 ## TOC
 
 * [Map](#71-map)
-    * [Map eviction](#71-map-eviction)
+    * [Map eviction](#711-map-eviction)
 * [MultiMap](#72-multimap)
     * [基于 Set 的 MultiMap](#721-set-based-multimap)
     * [基于 List 的 MultiMap](#722-list-based-multimap)
