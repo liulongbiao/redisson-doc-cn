@@ -1,5 +1,24 @@
 # 分布式集合
 
+## TOC
+
+* [Map](#71-map)
+    * [Map eviction](#71-map-eviction)
+* [MultiMap](#72-multimap)
+    * [基于 Set 的 MultiMap](#721-set-based-multimap)
+    * [基于 List 的 MultiMap](#722-list-based-multimap)
+    * [MultiMap eviction](#723-multimap-eviction)
+* [Set](#73-set)
+    * [Set eviction](#731-set-eviction)
+* [SortedSet](#74-sortedset)
+* [ScoredSortedSet](#75-scoredsortedset)
+* [LexSortedSet](#76-lexsortedset)
+* [List](#77-list)
+* [Queue](#78-queue)
+* [Deque](#79-deque)
+* [BlockingQueue](#710-blockingqueue)
+* [BlockingDeque](#711-blockingdeque)
+
 ## <a id="71-map"></a> Map
 
 Redisson 分布式的 Map 对象，实现了 `java.util.concurrent.ConcurrentMap`
@@ -25,7 +44,7 @@ map.fastRemoveAsync("321");
 [Redisson PRO](http://redisson.pro/) 版本的 Map 对象
 在集群模式中支持 [数据分区](./partition.md)。
 
-## <a id="711-map-eviction"></a> Map eviction
+### <a id="711-map-eviction"></a> Map eviction
 
 Redisson 分布式的 Map 可通过独立的 MapCache 对象支持 eviction。
 它也实现了  `java.util.concurrent.ConcurrentMap`
@@ -58,7 +77,7 @@ map.putIfAbsent("key2", new SomeObject(), 40, TimeUnit.SECONDS, 10, TimeUnit.SEC
 Redisson 分布式的 MultiMap 对象允许给每个键绑定多个值。
 键的数量限制由 Redis 限制为 `4 294 967 295`。
 
-## <a id="721-set-based-multimap"></a> 基于 Set 的 MultiMap
+### <a id="721-set-based-multimap"></a> 基于 Set 的 MultiMap
 
 基于 Set 的 MultiMap 不允许每个键中的值有重复。
 
@@ -76,7 +95,7 @@ Set<SimpleValue> oldValues = map.replaceValues(new SimpleKey("0"), newValues);
 Set<SimpleValue> removedValues = map.removeAll(new SimpleKey("0"));
 ```
 
-## <a id="722-list-based-multimap"></a> 基于 List 的 MultiMap
+### <a id="722-list-based-multimap"></a> 基于 List 的 MultiMap
 
 基于 List 的 MultiMap 会存储插入的顺序且允许键对应的值中存在重复。
 
@@ -95,7 +114,7 @@ List<SimpleValue> oldValues = map.replaceValues(new SimpleKey("0"), newValues);
 List<SimpleValue> removedValues = map.removeAll(new SimpleKey("0"));
 ```
 
-## <a id="723-multimap-eviction"></a> MultiMap eviction
+### <a id="723-multimap-eviction"></a> MultiMap eviction
 
 Multimap 对象可通过独立的 MultimapCache 对象来支持 eviction。
 它对基于 Set 和 List 的 MultiMap 分别有 `RSetMultimapCache` 和 `RListMultimapCache` 对象。
@@ -135,7 +154,7 @@ set.remove(new SomeObject());
 [Redisson PRO](http://redisson.pro/) 版本的 Set 对象
 在集群模式中支持 [数据分区](./partition.md)。
 
-## <a id="731-set-eviction"></a> Set eviction
+### <a id="731-set-eviction"></a> Set eviction
 
 Redisson 分布式的 Set 对象可通过独立的 SetCache 对象来支持 eviction。
 它也实现了 `java.util.Set` 接口。
