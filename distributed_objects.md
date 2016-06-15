@@ -38,7 +38,7 @@ long keysAmount = keys.count();
 
 ## <a id="61-object"></a> Object
 
-Redisson 分布式的 Java 对象 `RBucket` 可用作任意类型对象的通用容器。
+Redisson 分布式的 `RBucket` 对象可用作任意类型对象的通用容器。
 
 ```java
 RBucket<AnyObject> bucket = redisson.getBucket("anyObject");
@@ -52,7 +52,7 @@ bucket.getAndSet(new AnyObject(6));
 
 ## <a id="62-geospatial-holder"></a> 地理位置容器
 
-Redisson 分布式的 Java 对象  `RGeo` 可用作地理位置项的容器。
+Redisson 分布式的 `RGeo` 对象 可用作地理位置项的容器。
 
 ```java
 RGeo<String> geo = redisson.getGeo("test");
@@ -69,7 +69,7 @@ Map<String, GeoPosition> citiesWithPositions = geo.radiusWithPosition(15, 37, 20
 
 ## <a id="63-bitset"></a> BitSet
 
-Redisson 分布式的 Java 对象  `RBitSet` 具有类似于 `java.util.BitSet` 的结构，
+Redisson 分布式的 `RBitSet` 对象具有类似于 `java.util.BitSet` 的结构，
 且表示的位向量会根据需要增长。BitSet 的大小由 Redis 限制为 `4 294 967 295`。
 
 ```java
@@ -83,7 +83,7 @@ set.xor("anotherBitset");
 
 ## <a id="64-atomiclong"></a> AtomicLong
 
-Redisson 分布式的 Java 对象  `RAtomicLong` 具有类似于 
+Redisson 分布式的 `RAtomicLong` 对象具有类似于 
 `java.util.concurrent.atomic.AtomicLong` 对象的结构。
 
 ```java
@@ -95,7 +95,7 @@ atomicLong.get();
 
 ## <a id="65-atomicdouble"></a> AtomicDouble
 
-Redisson 分布式的 Java `AtomicDouble` 对象.
+Redisson 分布式的 `AtomicDouble` 对象.
 
 ```java
 RAtomicDouble atomicDouble = redisson.getAtomicDouble("myAtomicDouble");
@@ -106,7 +106,7 @@ atomicDouble.get();
 
 ## <a id="66-topic"></a> Topic
 
-Redisson 分布式的 Java `Topic` 对象实现了 发布/订阅 机制。
+Redisson 分布式的 `Topic` 对象实现了 发布/订阅 机制。
 
 ```java
 RTopic<SomeObject> topic = redisson.getTopic("anyTopic");
@@ -124,7 +124,7 @@ long clientsReceivedMessage = topic.publish(new SomeObject());
 
 ## <a id="661-topic-pattern"></a> Topic 模式
 
-Redisson Java Topic pattern 对象可通过指定模式订阅到多个 topics。
+Redisson Topic pattern 对象可通过指定模式订阅到多个 topics。
 
 ```java
 // subscribe to all topics by `topic1.*` pattern
@@ -141,7 +141,7 @@ Topic 模式监听器在重连到 Redis 服务器或者 Redis 服务器故障恢
 
 ## <a id="67-bloom-filter"></a> Bloom filter
 
-Redisson 分布式的 Java Bloom filter 对象。
+Redisson 分布式的 Bloom filter 对象。
 
 ```java
 RBloomFilter<SomeObject> bloomFilter = redisson.getBloomFilter("sample");
@@ -156,7 +156,7 @@ bloomFilter.contains(new SomeObject("field1Value", "field8Value"));
 
 ## <a id="68-hyperloglog"></a> HyperLogLog
 
-Redisson 分布式的 Java HyperLogLog 对象。
+Redisson 分布式的 HyperLogLog 对象。
 
 ```java
 RHyperLogLog<Integer> log = redisson.getHyperLogLog("log");
